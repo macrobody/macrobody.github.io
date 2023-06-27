@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #container {
+      position: relative;
+      width: 500px;
+    }
+    
+    #main-picture {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    .hover-picture {
+      display: none;
+      position: absolute;
+    }
+    
+    #coordinates {
+      position: absolute;
+      top: 10px;
+      left: 520px;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <img id="main-picture" src="pic/map_1707.jpg" alt="Main Picture" width="500" height="500">
+    <img class="hover-picture" data-coord="330,290" src="pic/baf_map1707_765_718_DEVITO_POS19_14x6.jpg" alt="DEVITO" width="500" height="500">
+    <img class="hover-picture" data-coord="176,383" src="pic/baf_map1707_405_924_LUDO22_POS19_14x5.jpg" alt="LUDO22" width="500" height="500">
+  </div>
+  
+  <div id="coordinates"></div>
+
+  <script>
+    var hoverPictures = document.getElementsByClassName('hover-picture');
+    var coordinatesField = document.getElementById('coordinates');
+    
+    document.addEventListener('mousemove', function(e) {
+      var x = e.clientX;
+      var y = e.clientY;
+      
+      // Update the coordinates field with the current mouse coordinates
+      coordinatesField.textContent = 'Mouse Coordinates: X: ' + x + ', Y: ' + y;
+      
+      for (var i = 0; i < hoverPictures.length; i++) {
+        var picture = hoverPictures[i];
+        var coordString = picture.getAttribute('data-coord');
+        var coords = coordString.split(',');
+        var coordX = parseInt(coords[0]);
+        var coordY = parseInt(coords[1]);
+        
+        if (x >= coordX && x <= (coordX + 10) && y >= coordY && y <= (coordY + 10)) {
+          picture.style.left = coordX + 'px';
+          picture.style.top = coordY + 'px';
+          picture.style.display = 'block';
+        } else {
+          picture.style.display = 'none';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
